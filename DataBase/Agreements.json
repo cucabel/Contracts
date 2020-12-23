@@ -1,0 +1,205 @@
+[
+
+{
+	"myCompany": {
+		"id": "san",
+		"name": "Santander"
+	},
+	
+	"counterpartyCompany": {
+		"id": "bbva",
+		"name": "Banco Bilbao Vizcaya Argentaria"
+	},
+	
+	"scansList": [
+		{
+			"fileName": "document1.pdf",
+			"text": "Lorem ipsumdolor sit amet, consectetuer adipiscing elit",
+			"pageCount": "5"
+		}
+	]
+},
+
+{
+	"myCompany": {
+		"id": "san",
+		"name": "Santander"
+	},
+	
+	"counterpartyCompany": {
+		"id": "bbva",
+		"name": "Banco Bilbao Vizcaya Argentaria"
+	},
+	
+	"scansList": [
+		{
+			"fileName": "document1.pdf",
+			"text": "Lorem ipsumdolor sit amet, consectetuer adipiscing elit",
+			"pageCount": "5"
+		},
+		{
+			"fileName": "document2.pdf",
+			"text": "Cum sociis natoque penatibus et magnis dis parturient montes",
+			"pageCount": "3"
+		},	
+		{
+			"fileName": "document3.pdf",
+			"text": "Nullam dictum felis eu pede mollis pretium. Integer tincidunt",
+			"pageCount": "4"
+		},
+		{
+			"fileName": "document4.pdf",
+			"text": "Etiam ultricies nisi vel augue",
+			"pageCount": "1"
+		}
+	
+	]
+},
+
+{
+	"myCompany": {
+		"id": "san",
+		"name": "Santander"
+	},
+	
+	"counterpartyCompany": {
+		"id": "bbva",
+		"name": "Banco Bilbao Vizcaya Argentaria"
+	},
+	
+	"scansList": [
+		{
+			"fileName": "document1.pdf",
+			"text": "Lorem ipsumdolor sit amet, consectetuer adipiscing elit",
+			"pageCount": "5"
+		}
+	
+	]
+},
+
+{
+	"myCompany": {
+		"id": "san",
+		"name": "Santander"
+	},
+	
+	"counterpartyCompany": {
+		"id": "bbva",
+		"name": "Banco Bilbao Vizcaya Argentaria"
+	},
+	
+	"scansList": [
+		{
+			"fileName": "document5.pdf",
+			"text": "it must appear",
+			"pageCount": "1"
+		}
+			
+	]
+},
+
+{
+	"myCompany": {
+		"id": "kutxa",
+		"name": "Kutxa Bank"
+	},
+	
+	"counterpartyCompany": {
+		"id": "sbd",
+		"name": "Banc Sabadell"
+	},
+	
+	"scansList": [
+		{
+			"fileName": "document7.pdf",
+			"text": "it must not appear",
+			"pageCount": "1"
+		}
+				
+	]
+},
+
+{
+	"myCompany": {
+		"id": "san",
+		"name": "Santander"
+	},
+	
+	"counterpartyCompany": {
+		"id": "bbva",
+		"name": "Banco Bilbao Vizcaya Argentaria"
+	},
+	
+	"scansList": [
+		{
+			"fileName": "document1.pdf",
+			"text": "Lorem ipsumdolor sit amet, consectetuer adipiscing elit",
+			"pageCount": "5"
+		}
+	
+	]
+},
+
+{
+	"myCompany": {
+		"id": "san",
+		"name": "Santander"
+	},
+	
+	"counterpartyCompany": {
+		"id": "bbva",
+		"name": "Banco Bilbao Vizcaya Argentaria"
+	},
+	
+	"scansList": [
+		{
+			"fileName": "document5.pdf",
+			"text": "it must appear",
+			"pageCount": "1"
+		}
+			
+	]
+},
+
+{
+	"myCompany": {
+		"id": "kutxa",
+		"name": "Kutxa Bank"
+	},
+	
+	"counterpartyCompany": {
+		"id": "sbd",
+		"name": "Banc Sabadell"
+	},
+	
+	"scansList": [
+		{
+			"fileName": "document7.pdf",
+			"text": "it must not appear",
+			"pageCount": "1"
+		}
+				
+	]
+},
+
+{
+	"myCompany": {
+		"id": "san",
+		"name": "Santander"
+	},
+	
+	"counterpartyCompany": {
+		"id": "bbva",
+		"name": "Banco Bilbao Vizcaya Argentaria"
+	},
+	
+	"scansList": [
+		{
+			"fileName": "document1.pdf",
+			"text": "Lorem ipsumdolor sit amet, consectetuer adipiscing elit",
+			"pageCount": "5"
+		}
+	]
+}
+
+]

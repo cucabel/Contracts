@@ -11,20 +11,20 @@ import com.contracts.domain.Scan;
 
 public interface AgreementService {
 
-	public void addAgreement() throws IOException, ParseException;
+	public void addAll() throws IOException, ParseException;
 
-	public List<Agreement> getAllAgreements();
+	public List<Agreement> getAll();
 
-	public void addScansToAgreement(Agreement agreement, List<Scan> scansListToAdd);
+	public void addScans(Agreement agreement, List<Scan> scans);
 
-	public void removeAllAgreemetScans(Agreement agreement);
+	public void removeAllScans(Agreement agreement);
 
-	public List<String> scansWithTextAgreementsList(Agreement agreementGiven, String text);
+	public List<String> getScansWithText(Agreement agreement, String text);
 
-	public int agreementTotalPages(Agreement agreement);
+	public int countPages(Agreement agreement);
 
-	public List<String> fileNamesOfTheCompanyWithGivenId(List<Agreement> agreementsList, String id);
+	public List<String> getFileNames(List<Agreement> agreementsList, String id);
 
-	public Map<String, List<Agreement>> asignAgreementsListToCompany(List<Agreement> agreementsList);
+	public Map<String, List<Agreement>> getAgreements(List<Agreement> agreementsList);
 
 }

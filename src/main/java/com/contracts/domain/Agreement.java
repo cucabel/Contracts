@@ -1,19 +1,19 @@
 package com.contracts.domain;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Agreement {			//An agreement is a contract between two companies
 	public Company myCompany;
 	public Company counterpartyCompany;
-	public List<Scan> scansList = new ArrayList<>();
-	public int numberOfPages;
+	public List<Scan> scans = new ArrayList<>();
 	
 	public Agreement() {}
 
-	public Agreement(Company companyOne, Company companyTwo, List<Scan> scansList) {
-		myCompany = companyOne;
-		counterpartyCompany = companyTwo;
-		this.scansList = scansList;
+	public Agreement(Company myCompany, Company counterpartyCompany, List<Scan> scans) {
+		this.myCompany = myCompany;
+		this.counterpartyCompany = counterpartyCompany;
+		this.scans = scans;
 	}
 
 	public Company getMyCompany() {
@@ -32,55 +32,42 @@ public class Agreement {			//An agreement is a contract between two companies
 		this.counterpartyCompany = counterpartyCompany;
 	}
 
-	public List<Scan> getScansList() {
-		return scansList;
+	public List<Scan> getScans() {
+		return scans;
 	}
 
-	public void setScansList(List<Scan> scansList) {
-		this.scansList = scansList;
+	public void setScans(List<Scan> scans) {
+		this.scans = scans;
 	}
 		
 	//1.1. Add scans to a contract
-	public void addScans(List<Scan> scansListToAdd) {
-		if (this.scansList == null)
-				setScansList(scansListToAdd);
-		else if (!(this.scansList == null))
-			for (Scan scanToAdd : scansListToAdd)
-				scansList.add(scanToAdd);		
+	public void addScans(List<Scan> scansToAdd) {
+		if (this.scans == null) setScans(scansToAdd);
+		else scansToAdd.forEach(this.scans::add);
 	}
 	
 	//1.2. Remove scans from a contract
 	public void removeAllScans() {
-		scansList.clear();
+		this.scans.clear();
 	}
 		
 	//2. Check if the text is found in any of the contract scans
-	public List<String> scansWithTextList (String text) {
-		List<String> scansWithTextList = new ArrayList<>();
-		for (Scan scan : scansList)
-			if (scan.getText().equals(text))
-				scansWithTextList.add(scan.getFileName());
-		return scansWithTextList;			
+	public List<String> getScansWithText (String text) {
+		return this.scans.stream().filter(s -> s.getText().equals(text)).map(s -> s.getFileName()).collect(Collectors.toList());
 	}
 	
 	//3. Total page count based on the scans contained in the contract
-	public int numberOfPages() {
-		for (Scan scan : scansList)
-			numberOfPages += scan.getPageCount();
-		return numberOfPages;
+	public int countPages() {
+		return this.scans.stream().map(s -> s.getPageCount()).reduce(0, Integer::sum);
 	}
 
 	@Override
 	public String toString() {
 		String result =  "myCompany: " + myCompany + ", \ncounterpartyCompany: " + counterpartyCompany + ", \nscansList: ";
-		for (Scan scan : getScansList()) {
+		for (Scan scan : getScans()) {
 			result += "scan: " + scan + ",\n";
 		}
 		return result;
-		
 	}
-	
+
 }
-
-
-

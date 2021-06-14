@@ -4,7 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;import java.util.stream.Collector;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.json.simple.parser.ParseException;
@@ -23,68 +23,61 @@ public class AgreementServiceImpl implements AgreementService {
 	}
 
 	@Override
-	public void addAgreement() throws IOException, ParseException {
-		agreementRepository.addAgreement();
+	public void addAll() throws IOException, ParseException {
+		agreementRepository.addAll();
 	}
 
 	@Override
-	public List<Agreement> getAllAgreements() {
-		return agreementRepository.getAllAgreements();
+	public List<Agreement> getAll() {
+		return agreementRepository.getAll();
 	}
 
 	@Override
-	public void addScansToAgreement(Agreement agreement, List<Scan> scansListToAdd) {
-		agreement.addScans(scansListToAdd);		
+	public void addScans(Agreement agreement, List<Scan> scansToAdd) {
+		agreement.addScans(scansToAdd);		
 	}
 
 	@Override
-	public void removeAllAgreemetScans(Agreement agreement) {
+	public void removeAllScans(Agreement agreement) {
 		agreement.removeAllScans();
 	}
 
 	@Override
-	public List<String> scansWithTextAgreementsList(Agreement agreementGiven, String text) {
-		return agreementGiven.scansWithTextList(text);
+	public List<String> getScansWithText(Agreement agreement, String text) {
+		return agreement.getScansWithText(text);
 	}
 
 	@Override
-	public int agreementTotalPages(Agreement agreement) {
-		return agreement.numberOfPages();
+	public int countPages(Agreement agreement) {
+		return agreement.countPages();
 	}
 
 	@Override
-	public List<String> fileNamesOfTheCompanyWithGivenId(List<Agreement> agreementsList, String id) {
+	public List<String> getFileNames(List<Agreement> agreements, String id) {
+		return agreements.stream()
+				.filter(a -> a.getMyCompany().getId().equals(id))
+				.map(a -> a.getScans())
+				.flatMap(s -> s.stream())
+				.map(s -> s.getFileName())
+				.collect(Collectors.toList());
+	}
+
+	@Override
+	public Map<String, List<Agreement>> getAgreements(List<Agreement> totalAgreements) {
+		Map<String, List<Agreement>> agreements = new HashMap<>();
+
+		totalAgreements.forEach(a -> {
+			String counterpartyCiaId = a.getCounterpartyCompany().getId();
+			
+				if (!agreements.containsKey(counterpartyCiaId)) {
+					agreements.put(counterpartyCiaId, new ArrayList<>());
+					agreements.get(counterpartyCiaId).add(a);
+				} else {
+					agreements.get(counterpartyCiaId).add(a);
+				}
+		});
 		
-		return agreementsList.stream().filter(a -> a.getMyCompany().getId().equals(id)).map(a -> a.getScansList()).flatMap(s -> s.stream()).map(s -> s.getFileName()).collect(Collectors.toList());
-	}
-
-	@Override
-	public Map<String, List<Agreement>> asignAgreementsListToCompany(List<Agreement> agreementsList) {
-
-		String counterpartyCompanyId = null;
-		List<String> counterpartyCompaniesIdsList = new ArrayList<>();
-		List<List<Agreement>> counterpartyCompanyAgreementsListsList = new ArrayList<>();
-		Map<String, List<Agreement>> agreementsPerCounterpartyCompanyMap = new HashMap<>();
-
-		for (Agreement agreement1 : agreementsList) {
-			counterpartyCompanyId = agreement1.getCounterpartyCompany().getId();
-			if (!counterpartyCompaniesIdsList.contains(counterpartyCompanyId))
-				counterpartyCompaniesIdsList.add(counterpartyCompanyId);
-		}
-
-		for (int i = 0; i < counterpartyCompaniesIdsList.size(); i++) {
-			counterpartyCompanyAgreementsListsList.add(new ArrayList<>());
-			for (Agreement agreement2 : agreementsList) {
-				if (agreement2.getCounterpartyCompany().getId().equals(counterpartyCompaniesIdsList.get(i)))
-					counterpartyCompanyAgreementsListsList.get(i).add(agreement2);
-			}
-			if (!agreementsPerCounterpartyCompanyMap.containsKey(counterpartyCompaniesIdsList.get(i)))
-				agreementsPerCounterpartyCompanyMap.put(counterpartyCompaniesIdsList.get(i),
-						counterpartyCompanyAgreementsListsList.get(i));
-
-		}
-
-		return agreementsPerCounterpartyCompanyMap;
+		return agreements;
 	}
 
 }

@@ -19,7 +19,7 @@ public class AgreementRepository {
 	
 	public AgreementRepository() {}
 	
-	public void addAgreement() throws IOException, org.json.simple.parser.ParseException {
+	public void addAll() throws IOException, org.json.simple.parser.ParseException {
 		
 		JSONParser jsonParser = new JSONParser();
 				
@@ -30,25 +30,25 @@ public class AgreementRepository {
 		JSONArray agreementsListJsonObj = (JSONArray) obj;
 		
 		for (int i = 0; i < agreementsListJsonObj.size(); i++) {
-			JSONObject agrJsonObj = (JSONObject)agreementsListJsonObj.get(i);
+			JSONObject agreementJsonObj = (JSONObject)agreementsListJsonObj.get(i);
 			
-			JSONObject myCompanyObj = (JSONObject) agrJsonObj.get("myCompany");
-
+			JSONObject myCompanyObj = (JSONObject) agreementJsonObj.get("myCompany");
+			
 			String myCompanyId = (String) myCompanyObj.get("id");							
 			String myCompanyName = (String) myCompanyObj.get("name");
 			
 			//java
 			Company myCompany = new Company(myCompanyId, myCompanyName);
 			
-			JSONObject counterpartyCompanyObj = (JSONObject) agrJsonObj.get("counterpartyCompany");
-			
+			JSONObject counterpartyCompanyObj = (JSONObject) agreementJsonObj.get("counterpartyCompany");
+					
 			String counterpartyCompanyobjId = (String) counterpartyCompanyObj.get("id");							
 			String counterpartyCompanyobjName = (String) counterpartyCompanyObj.get("name");
 			
 			//java
 			Company counterpartyCompany = new Company(counterpartyCompanyobjId, counterpartyCompanyobjName);
 			
-			JSONArray scansListArray = (JSONArray) agrJsonObj.get("scansList");
+			JSONArray scansListArray = (JSONArray) agreementJsonObj.get("scansList");
 			
 			//java
 			List<Scan> scansList = new ArrayList<>();
@@ -73,7 +73,7 @@ public class AgreementRepository {
 	}
 		
 	//2., 4.
-	public List<Agreement> getAllAgreements() {
+	public List<Agreement> getAll() {
 		return agreements;
 	}
 

@@ -4,11 +4,11 @@ public class Scan {			//Scan is a document
 	
 	public String fileName;
 	public String text;
-	public long pageCount;
+	public int pageCount;
 	
 	public Scan() {}
 	
-	public Scan(String fileName, String text, long pageCount) {
+	public Scan(String fileName, String text, int pageCount) {
 		this.fileName = fileName;
 		this.text = text;
 		this.pageCount = pageCount;
@@ -30,11 +30,11 @@ public class Scan {			//Scan is a document
 		this.text = text;
 	}
 
-	public long getPageCount() {
+	public int getPageCount() {
 		return pageCount;
 	}
 
-	public void setPageCount(long pageCount) {
+	public void setPageCount(int pageCount) {
 		this.pageCount = pageCount;
 	}
 
@@ -67,8 +67,4 @@ public class Scan {			//Scan is a document
 		return true;
 	}
 
-
 }
-
-
-

@@ -70,14 +70,6 @@ public class Agreement {			//An agreement is a contract between two companies
 		return numberOfPages;
 	}
 
-	//4. Get a list of the file names from all the scans contained in a list of contracts where the company name matches the input id
-	public List<String> scansFilesNames (List<Scan> scansList) {
-		List<String> scansFileNames = new ArrayList<>();
-		for (Scan scan : scansList)
-			scansFileNames.add(scan.getFileName());
-		return scansFileNames;
-	}
-
 	@Override
 	public String toString() {
 		String result =  "myCompany: " + myCompany + ", \ncounterpartyCompany: " + counterpartyCompany + ", \nscansList: ";

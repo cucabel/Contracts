@@ -4,7 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.Map;import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.json.simple.parser.ParseException;
 
@@ -53,24 +54,8 @@ public class AgreementServiceImpl implements AgreementService {
 
 	@Override
 	public List<String> fileNamesOfTheCompanyWithGivenId(List<Agreement> agreementsList, String id) {
-
-		List<Agreement> myCompanyAgreementsList = new ArrayList<>();
-
-		for (Agreement agreement : agreementsList)
-			if (agreement.getMyCompany().getId().equals(id))
-				myCompanyAgreementsList.add(agreement);
-
-		List<Scan> myCompanyAgreementsScansList = new ArrayList<>();
-		List<String> myCompanyAgreementsScansFilesNamesList = new ArrayList<>();
-
-		for (Agreement agreement : myCompanyAgreementsList) {
-			List<Scan> scansList = agreement.getScansList();
-			for (Scan scan : scansList)
-				myCompanyAgreementsScansList.add(scan);
-			myCompanyAgreementsScansFilesNamesList = agreement.scansFilesNames(myCompanyAgreementsScansList);
-		}
-
-		return myCompanyAgreementsScansFilesNamesList;
+		
+		return agreementsList.stream().filter(a -> a.getMyCompany().getId().equals(id)).map(a -> a.getScansList()).flatMap(s -> s.stream()).map(s -> s.getFileName()).collect(Collectors.toList());
 	}
 
 	@Override

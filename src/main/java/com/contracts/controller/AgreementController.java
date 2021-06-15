@@ -19,7 +19,7 @@ public class AgreementController {
 		agreementService.addAll();
 	}
 
-	public List<Agreement> getAllAgreements() {
+	public List<Agreement> getAll() {
 		return agreementService.getAll();
 	}
 
@@ -43,14 +43,12 @@ public class AgreementController {
 		return agreementService.countPages(agreement);
 	}
 
-	// 4. Get a list of the file names from all the scans contained in a list 
-	// of contracts where the company acting as myCompany matches the input id
+	// 4. Get a list of the file names from all the scans contained in a list of contracts where the company acting as myCompany matches the input id
 	public List<String> getFileNames(List<Agreement> agreements, String id) {
 		return agreementService.getFileNames(agreements, id);
 	}
 
-	// 5. Group a list of contracts by counterParty company and return a map structure so that 
-	// the key is the counterParty id and the value is the list of contracts for that company
+	// 5. Group a list of contracts by counterParty company and return a map structure so that the key is the counterParty id and the value is the list of contracts for that company
 	public Map<String, List<Agreement>> getAgreements(List<Agreement> totalAgreements) {
 		return agreementService.getAgreements(totalAgreements);
 	}

@@ -17,28 +17,29 @@ public class AgreemenDomainTest {
 	
 	Scan scan1, scan2;
 	Agreement agreement;
+	List<Scan> scans1, scans2;
 	
 	@Before
 	public void init() {
-		Company myCompany = new Company("kutxa", "Kutxa Bank");
-		Company counterpartyCompany = new Company("sbd", "Banc Sabadell");
 		scan1 = new Scan("document1.pdf", "Lorem ipsumdolor sit amet, consectetuer adipiscing elit", 5);
-		scan2 = new Scan("document2.pdf", "Cum sociis natoque penatibus et magnis dis parturient montes", 3);
-		List<Scan> scans1 = new ArrayList<>();
+		scans1 = new ArrayList<>();
 		scans1.add(scan1);
-
-		agreement = new Agreement(myCompany, counterpartyCompany, scans1);
-	}
-
-	@Test
-	public void testAddScans() {
-		List<Scan> scans2 = new ArrayList<>();
+		
+		scan2 = new Scan("document2.pdf", "Cum sociis natoque penatibus et magnis dis parturient montes", 3);
+		scans2 = new ArrayList<>();
 		scans2.add(scan2);
 		
+		agreement = new Agreement(new Company("kutxa", "Kutxa Bank"), new Company("sbd", "Banc Sabadell"), scans1);
+	}
+
+    //1.1. Add scans to a contract
+	@Test
+	public void testAddScans() {
 		agreement.addScans(scans2);
 		assertEquals(Arrays.asList(scan1, scan2), agreement.getScans());
 	}
 
+	//1.2. Remove scans from a contract
 	@Test
 	public void testRemoveAllScans() {
 		agreement.removeAllScans();
@@ -54,9 +55,6 @@ public class AgreemenDomainTest {
 	
 	@Test
 	public void testCountPages() {
-		List<Scan> scans2 = new ArrayList<>();
-		scans2.add(scan2);
-		
 		agreement.addScans(scans2);
 		assertEquals(8, agreement.countPages());
 	}

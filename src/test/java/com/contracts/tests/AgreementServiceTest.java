@@ -1,80 +1,77 @@
 package com.contracts.tests;
 
-import java.io.IOException;
-import java.util.ArrayList;
+import static org.mockito.Mockito.when;
+
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.json.simple.parser.ParseException;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentMatchers;
+import org.mockito.InjectMocks;
+import org.mockito.Mockito;
 
 import com.contractcs.service.AgreementService;
 import com.contracts.domain.Agreement;
+import com.contracts.domain.Company;
 import com.contracts.domain.Scan;
 import com.contracts.service.impl.AgreementServiceImpl;
 
 public class AgreementServiceTest {
 	
+	@InjectMocks
 	private AgreementService agreementService = new AgreementServiceImpl();
+	private Agreement agreement;
 	
-	List<Agreement> agreementsList;
 	Agreement agreement0, agreement1, agreement2, agreement3, agreement4, agreement5;
 	
 	@Before
-	public void init() throws IOException, ParseException {
-		agreementService.addAll();	
-		agreementsList = agreementService.getAll();
-		agreement0 = agreementsList.get(0);
-		agreement1 = agreementsList.get(1);
-		agreement2 = agreementsList.get(2);
-		agreement3 = agreementsList.get(3);
-		agreement4 = agreementsList.get(4);
-		agreement5 = agreementsList.get(5);
-	}
+	public void init() {
+		agreement = Mockito.mock(Agreement.class);
 		
-	//1.1. Add scans to a contract
-	@Test
-	public void testAddScans() {
 		Scan scan1 = new Scan("document1.pdf", "Lorem ipsumdolor sit amet, consectetuer adipiscing elit", 5);
 		Scan scan2 = new Scan("document2.pdf", "Cum sociis natoque penatibus et magnis dis parturient montes", 3);
-		
-		agreementService.addScans(agreement0, Arrays.asList(scan2));
-		Assert.assertEquals(Arrays.asList(scan1, scan2), agreement0.getScans());
+		Scan scan3 = new Scan("document3.pdf", "Nullam dictum felis eu pede mollis pretium. Integer tincidunt", 4);
+		Scan scan4 = new Scan("document4.pdf", "Etiam ultricies nisi vel augue", 1);
+		Scan scan5 = new Scan("document5.pdf", "it must appear", 1);
+		Scan scan7 = new Scan("document7.pdf", "it must not appear", 1);
+
+		List<Scan> scans0 = Arrays.asList(scan1);
+		List<Scan> scans1 = Arrays.asList(scan1, scan2, scan3, scan4);
+		List<Scan> scans3 = Arrays.asList(scan5);
+		List<Scan> scans4 = Arrays.asList(scan7);
+
+		agreement1 = new Agreement(new Company("san", "Santander"), new Company("bbva", "Banco Bilbao Vizcaya Argentaria"), scans1);
+		agreement2 = new Agreement(new Company("san", "Santander"), new Company("bbva", "Banco Bilbao Vizcaya Argentaria"), scans0);
+		agreement3 = new Agreement(new Company("san", "Santander"), new Company("bbva", "Banco Bilbao Vizcaya Argentaria"), scans3);
+		agreement4 = new Agreement(new Company("kutxa", "kutxa bank"), new Company("sbd", "Banc Sabadell"), scans4);
 	}
 	
-	//1.2. Remove scans from a contract
-	@Test	
-	public void testRemoveAllScans() {
-		agreementService.removeAllScans(agreement5);
-		Assert.assertEquals(new ArrayList<>(), agreement5.getScans());		
-	}
-	
-	//2. Check if the text is found in any of the contract scans
 	@Test
 	public void testGetScansWithText() {
 		String text = "Nullam dictum felis eu pede mollis pretium. Integer tincidunt";
-		Scan scan3 = new Scan("document3.pdf", "Nullam dictum felis eu pede mollis pretium. Integer tincidunt", 4);
+		List<String> names = Arrays.asList("document3.pdf");
 		
-		Assert.assertEquals(Arrays.asList(scan3.getFileName()), agreementService.getScansWithText(agreement1, text));
+		when(agreement.getScansWithText(ArgumentMatchers.any(String.class))).thenReturn(names);
+		Assert.assertEquals(names, agreementService.getScansWithText(agreement1, text));
 	}
 	
-	//3. Total page count based on the scans contained in the contract
 	@Test
 	public void testCountPages() {
+		when(agreement.countPages()).thenReturn(13);
 		Assert.assertEquals(13, agreementService.countPages(agreement1));
 	}
 
-	//4. Get a list of the file names from all the scans contained in a list of contracts where the company acting as myCompany matches the input id
 	@Test
 	public void getFileNames() {
-		Assert.assertEquals(Arrays.asList("document1.pdf", "document5.pdf"), agreementService.getFileNames(Arrays.asList(agreement2, agreement3, agreement4), "san"));		
+		List<String> names = Arrays.asList("document1.pdf", "document5.pdf");
+
+		Assert.assertEquals(names, agreementService.getFileNames(Arrays.asList(agreement2, agreement3, agreement4), "san"));		
 	}
 
-	//5. Group a list of contracts by counterParty company and return a map structure so that the key is the counterParty id and the value is the list of contracts for that company
 	@Test
 	public void testGetAgreents() {
 		Map<String, List<Agreement>> expected = new HashMap<>();

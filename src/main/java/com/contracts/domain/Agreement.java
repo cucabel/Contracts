@@ -60,6 +60,33 @@ public class Agreement {			//An agreement is a contract between two companies
 	public int countPages() {
 		return this.scans.stream().map(s -> s.getPageCount()).reduce(0, Integer::sum);
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Agreement other = (Agreement) obj;
+		if (counterpartyCompany == null) {
+			if (other.counterpartyCompany != null)
+				return false;
+		} else if (!counterpartyCompany.equals(other.counterpartyCompany))
+			return false;
+		if (myCompany == null) {
+			if (other.myCompany != null)
+				return false;
+		} else if (!myCompany.equals(other.myCompany))
+			return false;
+		if (scans == null) {
+			if (other.scans != null)
+				return false;
+		} else if (!scans.equals(other.scans))
+			return false;
+		return true;
+	}
 
 	@Override
 	public String toString() {

@@ -11,7 +11,6 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.ArgumentMatchers;
-import org.mockito.InjectMocks;
 import org.mockito.Mockito;
 
 import com.contractcs.service.AgreementService;
@@ -22,7 +21,6 @@ import com.contracts.service.impl.AgreementServiceImpl;
 
 public class AgreementServiceTest {
 	
-	@InjectMocks
 	private AgreementService agreementService = new AgreementServiceImpl();
 	private Agreement agreement;
 	
